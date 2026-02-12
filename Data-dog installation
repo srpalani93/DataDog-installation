@@ -1,7 +1,12 @@
+Get the api key for datadog login:
+
+https://app.datadoghq.com/organization-settings/api-keys
 
 
+kubectl create namespace datadog
 
-
+helm repo add datadog https://helm.datadoghq.com
+helm repo update
 
 Data-dog-values.yaml
 
@@ -49,6 +54,15 @@ agents:
 
 apply command:
 
-helm upgrade datadog datadog/datadog \
+helm install datadog datadog/datadog \
   -n datadog \
   -f datadog-values.yaml
+
+
+kubectl get pods -n datadog
+
+to verify the datadog console:
+
+https://app.datadoghq.com
+
+kubectl exec -it -n datadog <datadog-agent-pod> -- agent status
