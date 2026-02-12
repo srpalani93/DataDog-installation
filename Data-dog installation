@@ -1,0 +1,54 @@
+
+
+
+
+
+Data-dog-values.yaml
+
+datadog:
+  apiKey: "<YOUR_DATADOG_API_KEY>"
+  site: datadoghq.com
+
+  clusterName: kubeadm-ec2-cluster
+
+  kubeStateMetricsEnabled: true
+
+  logs:
+    enabled: true
+    containerCollectAll: true
+
+  apm:
+    enabled: true
+    portEnabled: true
+
+  processAgent:
+    enabled: true
+    processCollection: true   # 🔥 Important (add this)
+
+  networkMonitoring:
+    enabled: true
+
+  prometheusScrape:
+    enabled: true
+
+  kubelet:
+    tlsVerify: false
+
+  containerRuntimeSupport:
+    enabled: true
+
+agents:
+  tolerations:
+    - operator: "Exists"
+
+  # 🔥 Important for process & network monitoring
+  containers:
+    agent:
+      securityContext:
+        privileged: true
+
+apply command:
+
+helm upgrade datadog datadog/datadog \
+  -n datadog \
+  -f datadog-values.yaml
